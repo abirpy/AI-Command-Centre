@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://ai-command-centre-production.up.railway.app';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://localhost:3001';
 
 class ApiServiceClass {
   constructor() {

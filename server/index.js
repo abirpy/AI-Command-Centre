@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
 import rateLimit from 'express-rate-limit';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
@@ -60,7 +59,6 @@ app.use(cors({
   },
   credentials: true
 }));
-// app.use(morgan('combined')); // Commented out to reduce log noise
 app.use(limiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
