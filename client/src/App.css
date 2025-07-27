@@ -294,10 +294,11 @@ body {
 
 .popup-details p {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   font-size: 0.8rem;
   gap: 0.5rem;
+  text-align: right;
 }
 
 .popup-details p strong {
