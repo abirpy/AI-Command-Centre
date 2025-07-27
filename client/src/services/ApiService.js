@@ -2,10 +2,6 @@ import axios from 'axios';
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://ai-command-centre-production.up.railway.app';
 
-// Debug logging
-console.log('Environment variables:', import.meta.env);
-console.log('BACKEND_URL:', BACKEND_URL);
-
 class ApiServiceClass {
   constructor() {
     this.api = axios.create({
