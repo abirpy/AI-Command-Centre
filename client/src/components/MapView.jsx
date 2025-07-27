@@ -182,13 +182,13 @@ const MapView = ({
               <div className="poi-popup">
                 <h3>{poi.name}</h3>
                 <div className="popup-details">
-                  <p><strong>Type:</strong> {poi.type.replace('_', ' ')}</p>
-                  <p><strong>Description:</strong> {poi.description}</p>
+                  <p><strong>Type:</strong> <span className="popup-value">{poi.type.replace('_', ' ')}</span></p>
+                  <p><strong>Description:</strong> <span className="popup-value">{poi.description}</span></p>
                   {poi.materials && poi.materials.length > 0 && (
-                    <p><strong>Materials:</strong> {poi.materials.join(', ')}</p>
+                    <p><strong>Materials:</strong> <span className="popup-value">{poi.materials.join(', ')}</span></p>
                   )}
                   {poi.capacity && (
-                    <p><strong>Capacity:</strong> {poi.currentAmount}/{poi.capacity} tons</p>
+                    <p><strong>Capacity:</strong> <span className="popup-value">{poi.currentAmount}/{poi.capacity} tons</span></p>
                   )}
                   {poi.status && (
                     <p><strong>Status:</strong> 
