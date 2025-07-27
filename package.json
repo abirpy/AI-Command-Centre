@@ -1,0 +1,14 @@
+{
+  "name": "sensmore-project",
+  "version": "1.0.0",
+  "description": "Vehicle Fleet Management System",
+  "private": true,
+  "scripts": {
+    "start": "cd server && npm start",
+    "install-server": "cd server && npm install",
+    "build": "cd server && npm install"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+} 
