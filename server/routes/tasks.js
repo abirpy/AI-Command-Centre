@@ -399,7 +399,7 @@ router.post('/', async (req, res) => {
         estimatedDuration: step.estimatedTime || 10,
         status: 'pending',
         parameters: {
-          instruction: instruction,
+          instruction,
           vehicleId: vehicleId || null
         }
       }))

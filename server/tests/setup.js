@@ -106,7 +106,7 @@ afterEach(async () => {
   await Material.deleteMany({})
   await ChatMessage.deleteMany({})
   await Task.deleteMany({})
-  
+
   // Seed with test data
   await Vehicle.insertMany(mockVehicles)
   await POI.insertMany(mockPOIs)

@@ -65,12 +65,12 @@ router.post('/', async (req, res) => {
     res.status(201).json(savedPOI)
   } catch (error) {
     console.error('Error creating POI:', error)
-    
+
     // Handle validation errors
     if (error.name === 'ValidationError') {
       return res.status(400).json({ error: error.message })
     }
-    
+
     res.status(500).json({ error: 'Failed to create POI' })
   }
 })
