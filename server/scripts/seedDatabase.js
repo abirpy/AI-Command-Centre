@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import connectDB from '../config/database.js';
-import { Vehicle, Task, POI, ChatMessage, Material } from '../models/index.js';
+import mongoose from 'mongoose'
+import connectDB from '../config/database.js'
+import { Vehicle, Task, POI, ChatMessage, Material } from '../models/index.js'
 
 // Import mock data structure for reference
 const mockVehicles = [
@@ -86,7 +86,7 @@ const mockVehicles = [
       serialNumber: 'VOL350-001'
     }
   }
-];
+]
 
 const mockPOIs = [
   {
@@ -161,7 +161,7 @@ const mockPOIs = [
     status: 'operational',
     description: 'Primary loading dock for material pickup'
   }
-];
+]
 
 const mockMaterials = [
   {
@@ -212,7 +212,7 @@ const mockMaterials = [
       environmentalImpact: 'minimal'
     }
   }
-];
+]
 
 const mockChatMessages = [
   {
@@ -265,47 +265,47 @@ const mockChatMessages = [
     priority: 'normal',
     isRead: false
   }
-];
+]
 
 const seedDatabase = async () => {
   try {
-    console.log('🌱 Starting database seeding...');
-    
+    console.log('🌱 Starting database seeding...')
+
     // Connect to database
-    await connectDB();
-    
+    await connectDB()
+
     // Clear existing data
-    console.log('🧹 Clearing existing data...');
-    await Vehicle.deleteMany({});
-    await POI.deleteMany({});
-    await Material.deleteMany({});
-    await ChatMessage.deleteMany({});
-    await Task.deleteMany({});
-    
+    console.log('🧹 Clearing existing data...')
+    await Vehicle.deleteMany({})
+    await POI.deleteMany({})
+    await Material.deleteMany({})
+    await ChatMessage.deleteMany({})
+    await Task.deleteMany({})
+
     // Seed Materials first (referenced by POIs)
-    console.log('📦 Seeding materials...');
-    await Material.insertMany(mockMaterials);
-    console.log(`✅ ${mockMaterials.length} materials seeded`);
-    
+    console.log('📦 Seeding materials...')
+    await Material.insertMany(mockMaterials)
+    console.log(`✅ ${mockMaterials.length} materials seeded`)
+
     // Seed Vehicles
-    console.log('🚛 Seeding vehicles...');
-    await Vehicle.insertMany(mockVehicles);
-    console.log(`✅ ${mockVehicles.length} vehicles seeded`);
-    
+    console.log('🚛 Seeding vehicles...')
+    await Vehicle.insertMany(mockVehicles)
+    console.log(`✅ ${mockVehicles.length} vehicles seeded`)
+
     // Seed POIs
-    console.log('📍 Seeding POIs...');
-    await POI.insertMany(mockPOIs);
-    console.log(`✅ ${mockPOIs.length} POIs seeded`);
-    
+    console.log('📍 Seeding POIs...')
+    await POI.insertMany(mockPOIs)
+    console.log(`✅ ${mockPOIs.length} POIs seeded`)
+
     // Seed Chat Messages
-    console.log('💬 Seeding chat messages...');
-    await ChatMessage.insertMany(mockChatMessages);
-    console.log(`✅ ${mockChatMessages.length} chat messages seeded`);
-    
+    console.log('💬 Seeding chat messages...')
+    await ChatMessage.insertMany(mockChatMessages)
+    console.log(`✅ ${mockChatMessages.length} chat messages seeded`)
+
     // No tasks seeded initially (they will be created via API)
-    
-    console.log('🎉 Database seeding completed successfully!');
-    
+
+    console.log('🎉 Database seeding completed successfully!')
+
     // Display summary
     const summary = {
       vehicles: await Vehicle.countDocuments(),
@@ -313,23 +313,22 @@ const seedDatabase = async () => {
       materials: await Material.countDocuments(),
       chatMessages: await ChatMessage.countDocuments(),
       tasks: await Task.countDocuments()
-    };
-    
-    console.log('📊 Database Summary:');
-    console.table(summary);
-    
+    }
+
+    console.log('📊 Database Summary:')
+    console.table(summary)
   } catch (error) {
-    console.error('❌ Seeding failed:', error);
+    console.error('❌ Seeding failed:', error)
   } finally {
-    await mongoose.connection.close();
-    console.log('🔌 Database connection closed');
-    process.exit(0);
+    await mongoose.connection.close()
+    console.log('🔌 Database connection closed')
+    process.exit(0)
   }
-};
+}
 
 // Run seeding if this file is executed directly
 if (process.argv[1] && process.argv[1].endsWith('seedDatabase.js')) {
-  seedDatabase();
+  seedDatabase()
 }
 
-export default seedDatabase; 
+export default seedDatabase

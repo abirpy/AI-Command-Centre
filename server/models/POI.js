@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const poiSchema = new mongoose.Schema({
   id: {
@@ -47,8 +47,8 @@ const poiSchema = new mongoose.Schema({
     min: 0,
     default: 0,
     validate: {
-      validator: function(value) {
-        return value <= this.capacity;
+      validator: function (value) {
+        return value <= this.capacity
       },
       message: 'Current amount cannot exceed POI capacity'
     }
@@ -77,24 +77,24 @@ const poiSchema = new mongoose.Schema({
   timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
-});
+})
 
 // Virtual for capacity utilization percentage
-poiSchema.virtual('utilizationPercentage').get(function() {
-  return Math.round((this.currentAmount / this.capacity) * 100);
-});
+poiSchema.virtual('utilizationPercentage').get(function () {
+  return Math.round((this.currentAmount / this.capacity) * 100)
+})
 
 // Virtual for available space
-poiSchema.virtual('availableSpace').get(function() {
-  return this.capacity - this.currentAmount;
-});
+poiSchema.virtual('availableSpace').get(function () {
+  return this.capacity - this.currentAmount
+})
 
 // Index for geospatial queries
-poiSchema.index({ 'position.lat': 1, 'position.lng': 1 });
+poiSchema.index({ 'position.lat': 1, 'position.lng': 1 })
 
 // Index for material types
-poiSchema.index({ materials: 1 });
+poiSchema.index({ materials: 1 })
 
-const POI = mongoose.model('POI', poiSchema);
+const POI = mongoose.model('POI', poiSchema)
 
-export default POI; 
+export default POI

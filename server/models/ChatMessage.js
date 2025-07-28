@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const chatMessageSchema = new mongoose.Schema({
   id: {
@@ -62,27 +62,27 @@ const chatMessageSchema = new mongoose.Schema({
   timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
-});
+})
 
 // Virtual for message age
-chatMessageSchema.virtual('age').get(function() {
-  const now = new Date();
-  const diff = now - this.timestamp;
-  const minutes = Math.floor(diff / (1000 * 60));
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  
-  if (days > 0) return `${days}d ago`;
-  if (hours > 0) return `${hours}h ago`;
-  if (minutes > 0) return `${minutes}m ago`;
-  return 'just now';
-});
+chatMessageSchema.virtual('age').get(function () {
+  const now = new Date()
+  const diff = now - this.timestamp
+  const minutes = Math.floor(diff / (1000 * 60))
+  const hours = Math.floor(minutes / 60)
+  const days = Math.floor(hours / 24)
+
+  if (days > 0) return `${days}d ago`
+  if (hours > 0) return `${hours}h ago`
+  if (minutes > 0) return `${minutes}m ago`
+  return 'just now'
+})
 
 // Index for efficient querying
-chatMessageSchema.index({ vehicleId: 1, timestamp: -1 });
-chatMessageSchema.index({ sender: 1, timestamp: -1 });
-chatMessageSchema.index({ vehicleId: 1, isRead: 1 });
+chatMessageSchema.index({ vehicleId: 1, timestamp: -1 })
+chatMessageSchema.index({ sender: 1, timestamp: -1 })
+chatMessageSchema.index({ vehicleId: 1, isRead: 1 })
 
-const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema);
+const ChatMessage = mongoose.model('ChatMessage', chatMessageSchema)
 
-export default ChatMessage; 
+export default ChatMessage

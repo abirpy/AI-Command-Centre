@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const stepSchema = new mongoose.Schema({
   id: {
@@ -47,7 +47,7 @@ const stepSchema = new mongoose.Schema({
   }
 }, {
   _id: false
-});
+})
 
 const taskSchema = new mongoose.Schema({
   id: {
@@ -131,46 +131,46 @@ const taskSchema = new mongoose.Schema({
   timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
-});
+})
 
 // Virtual for completion percentage
-taskSchema.virtual('completionPercentage').get(function() {
-  if (this.steps.length === 0) return 0;
-  const completedSteps = this.steps.filter(step => step.status === 'completed').length;
-  return Math.round((completedSteps / this.steps.length) * 100);
-});
+taskSchema.virtual('completionPercentage').get(function () {
+  if (this.steps.length === 0) return 0
+  const completedSteps = this.steps.filter(step => step.status === 'completed').length
+  return Math.round((completedSteps / this.steps.length) * 100)
+})
 
 // Virtual for current step
-taskSchema.virtual('currentStep').get(function() {
-  return this.steps.find(step => step.status === 'in_progress') || 
-         this.steps.find(step => step.status === 'pending');
-});
+taskSchema.virtual('currentStep').get(function () {
+  return this.steps.find(step => step.status === 'in_progress') ||
+         this.steps.find(step => step.status === 'pending')
+})
 
 // Virtual for total estimated duration
-taskSchema.virtual('totalEstimatedDuration').get(function() {
-  return this.steps.reduce((total, step) => total + step.estimatedDuration, 0);
-});
+taskSchema.virtual('totalEstimatedDuration').get(function () {
+  return this.steps.reduce((total, step) => total + step.estimatedDuration, 0)
+})
 
 // Virtual for elapsed time
-taskSchema.virtual('elapsedTime').get(function() {
-  if (!this.startedAt) return 0;
-  const endTime = this.completedAt || new Date();
-  return Math.round((endTime - this.startedAt) / (1000 * 60)); // in minutes
-});
+taskSchema.virtual('elapsedTime').get(function () {
+  if (!this.startedAt) return 0
+  const endTime = this.completedAt || new Date()
+  return Math.round((endTime - this.startedAt) / (1000 * 60)) // in minutes
+})
 
 // Index for queries
-taskSchema.index({ status: 1, priority: 1 });
-taskSchema.index({ vehicleId: 1, status: 1 });
-taskSchema.index({ createdAt: -1 });
+taskSchema.index({ status: 1, priority: 1 })
+taskSchema.index({ vehicleId: 1, status: 1 })
+taskSchema.index({ createdAt: -1 })
 
 // Middleware to update actualDuration when completed
-taskSchema.pre('save', function(next) {
+taskSchema.pre('save', function (next) {
   if (this.status === 'completed' && this.startedAt && !this.actualDuration) {
-    this.actualDuration = Math.round((new Date() - this.startedAt) / (1000 * 60));
+    this.actualDuration = Math.round((new Date() - this.startedAt) / (1000 * 60))
   }
-  next();
-});
+  next()
+})
 
-const Task = mongoose.model('Task', taskSchema);
+const Task = mongoose.model('Task', taskSchema)
 
-export default Task; 
+export default Task

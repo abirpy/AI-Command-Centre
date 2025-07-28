@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const vehicleSchema = new mongoose.Schema({
   id: {
@@ -50,8 +50,8 @@ const vehicleSchema = new mongoose.Schema({
     min: 0,
     default: 0,
     validate: {
-      validator: function(value) {
-        return value <= this.capacity;
+      validator: function (value) {
+        return value <= this.capacity
       },
       message: 'Current load cannot exceed vehicle capacity'
     }
@@ -96,30 +96,30 @@ const vehicleSchema = new mongoose.Schema({
   timestamps: true,
   toJSON: { virtuals: true },
   toObject: { virtuals: true }
-});
+})
 
 // Virtual for battery status
-vehicleSchema.virtual('batteryStatus').get(function() {
-  if (this.batteryLevel >= 75) return 'good';
-  if (this.batteryLevel >= 50) return 'fair';
-  if (this.batteryLevel >= 25) return 'low';
-  return 'critical';
-});
+vehicleSchema.virtual('batteryStatus').get(function () {
+  if (this.batteryLevel >= 75) return 'good'
+  if (this.batteryLevel >= 50) return 'fair'
+  if (this.batteryLevel >= 25) return 'low'
+  return 'critical'
+})
 
 // Virtual for load percentage
-vehicleSchema.virtual('loadPercentage').get(function() {
-  return Math.round((this.currentLoad / this.capacity) * 100);
-});
+vehicleSchema.virtual('loadPercentage').get(function () {
+  return Math.round((this.currentLoad / this.capacity) * 100)
+})
 
 // Index for geospatial queries
-vehicleSchema.index({ 'position.lat': 1, 'position.lng': 1 });
+vehicleSchema.index({ 'position.lat': 1, 'position.lng': 1 })
 
 // Middleware to update lastUpdate on save
-vehicleSchema.pre('save', function(next) {
-  this.lastUpdate = new Date();
-  next();
-});
+vehicleSchema.pre('save', function (next) {
+  this.lastUpdate = new Date()
+  next()
+})
 
-const Vehicle = mongoose.model('Vehicle', vehicleSchema);
+const Vehicle = mongoose.model('Vehicle', vehicleSchema)
 
-export default Vehicle; 
+export default Vehicle

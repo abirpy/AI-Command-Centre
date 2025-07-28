@@ -95,7 +95,7 @@ const TaskModal = ({ vehicles, onSubmit, onClose }) => {
       <div className="modal-content task-modal">
         <div className="modal-header">
           <h2>Create New Task</h2>
-          <button className="close-btn" onClick={onClose}>
+          <button className="close-btn" onClick={onClose} data-testid="close-btn">
             <X size={24} />
           </button>
         </div>
