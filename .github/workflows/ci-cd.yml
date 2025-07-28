@@ -111,7 +111,7 @@ jobs:
       - name: Deploy to Railway
         run: |
           cd server
-          railway up --service ai-command-centre-production
+          railway up
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
