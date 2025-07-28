@@ -87,54 +87,19 @@ jobs:
           npm run build
 
   # Deploy Backend (Railway)
-  # Note: Requires Railway token to be configured in repository settings:
-  # - RAILWAY_TOKEN: Your Railway API token
-  deploy-backend:
+  # Note: Railway automatically deploys when code is pushed to GitHub
+  # No manual deployment needed via GitHub Actions
+
+  # Deployment Status Check (Only runs after tests pass)
+  deployment-status:
     needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-          cache: "npm"
-          cache-dependency-path: server/package-lock.json
-
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-
-      - name: Deploy to Railway
+      - name: All Tests Passed
         run: |
-          cd server
-          railway up
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
-  # Deploy Frontend (Vercel)
-  # Note: Requires Vercel secrets to be configured in repository settings:
-  # - VERCEL_TOKEN: Your Vercel API token
-  # - VERCEL_ORG_ID: Your Vercel organization ID
-  # - VERCEL_PROJECT_ID: Your Vercel project ID
-  deploy-frontend:
-    needs: [test-backend, test-frontend]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Change to client directory
-        run: cd client
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          echo "✅ All tests passed successfully!"
+          echo "🚀 Railway will auto-deploy the backend"
+          echo "🚀 Vercel will auto-deploy the frontend"
+          echo "📋 Deployment Status: READY"
