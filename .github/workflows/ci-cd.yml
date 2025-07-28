@@ -111,7 +111,6 @@ jobs:
       - name: Deploy to Railway
         run: |
           cd server
-          railway login --token ${{ secrets.RAILWAY_TOKEN }}
           railway up --service ai-command-centre-production
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
@@ -130,10 +129,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Change to client directory
+        run: cd client
+
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./client
