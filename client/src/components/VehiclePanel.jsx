@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   MessageCircle, 
   Send, 
@@ -72,6 +72,20 @@ const VehiclePanel = ({
     }
   }, [vehicle?.id]); // Only trigger when vehicle ID changes
 
+  const loadChatMessages = useCallback(async () => {
+    if (!vehicle) return;
+    
+    try {
+      setIsLoadingMessages(true);
+      const messages = await ApiService.getChatMessages(vehicle.id);
+      setChatMessages(messages);
+    } catch (error) {
+      console.error('Error loading chat messages:', error);
+    } finally {
+      setIsLoadingMessages(false);
+    }
+  }, [vehicle]);
+
   useEffect(() => {
     if (vehicle && socket) {
       loadChatMessages();
@@ -88,25 +102,11 @@ const VehiclePanel = ({
         socket.off('new-message');
       };
     }
-  }, [vehicle, socket]);
+  }, [vehicle, socket, loadChatMessages]);
 
   useEffect(() => {
     scrollToBottom();
   }, [chatMessages]);
-
-  const loadChatMessages = async () => {
-    if (!vehicle) return;
-    
-    try {
-      setIsLoadingMessages(true);
-      const messages = await ApiService.getChatMessages(vehicle.id);
-      setChatMessages(messages);
-    } catch (error) {
-      console.error('Error loading chat messages:', error);
-    } finally {
-      setIsLoadingMessages(false);
-    }
-  };
 
   const scrollToBottom = () => {
     if (messagesEndRef.current && typeof messagesEndRef.current.scrollIntoView === 'function') {
