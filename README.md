@@ -162,6 +162,10 @@ Into detailed step-by-step plans considering:
 - Node.js (v18 or higher)
 - npm or yarn
 
+### Deployment Setup
+
+For production deployment, see [Deployment Setup Guide](docs/deployment-setup.md) for configuring required secrets and deployment settings.
+
 ### 1. Clone the Repository
 
 ```bash

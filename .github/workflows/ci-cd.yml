@@ -87,6 +87,8 @@ jobs:
           npm run build
 
   # Deploy Backend (Railway)
+  # Note: Requires Railway token to be configured in repository settings:
+  # - RAILWAY_TOKEN: Your Railway API token
   deploy-backend:
     needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
@@ -96,13 +98,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy to Railway
-        uses: bervProject/railway-deploy@v1.0.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          railway_token: ${{ secrets.RAILWAY_TOKEN }}
-          service: ai-command-centre-production
+          node-version: "18"
+          cache: "npm"
+          cache-dependency-path: server/package-lock.json
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        run: |
+          cd server
+          railway login --token ${{ secrets.RAILWAY_TOKEN }}
+          railway up --service ai-command-centre-production
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
 
   # Deploy Frontend (Vercel)
+  # Note: Requires Vercel secrets to be configured in repository settings:
+  # - VERCEL_TOKEN: Your Vercel API token
+  # - VERCEL_ORG_ID: Your Vercel organization ID
+  # - VERCEL_PROJECT_ID: Your Vercel project ID
   deploy-frontend:
     needs: [test-backend, test-frontend]
     runs-on: ubuntu-latest
